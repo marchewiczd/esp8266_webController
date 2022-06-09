@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace ApiCommunication.Requests
+namespace Core.Requests
 {
     public abstract class RequestBase
     {
@@ -15,15 +15,15 @@ namespace ApiCommunication.Requests
             var request = new RestRequest(Resource);
             request.Method = HttpMethod;
 
-            if (UseParameters)
+            if (Parameters == null || !UseParameters) 
+                return request;
+            
+            foreach (var parameter in Parameters)
             {
-                foreach (var parameter in Parameters)
-                {
-                    if (string.IsNullOrEmpty(parameter.Value))
-                        continue;
+                if (string.IsNullOrEmpty(parameter.Value))
+                    continue;
 
-                    request.AddParameter(parameter.Key, parameter.Value);
-                }
+                request.AddParameter(parameter.Key, parameter.Value);
             }
 
             return request;

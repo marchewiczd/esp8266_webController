@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ApiCommunication.DataModels.Responses
+namespace Core.DataModels.Responses
 {
     public class ToggleRelayResponse
     {

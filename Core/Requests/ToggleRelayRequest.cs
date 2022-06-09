@@ -1,4 +1,7 @@
-﻿namespace ApiCommunication.Requests
+﻿using Core.DataModels.Enums;
+using Core.Extensions;
+
+namespace Core.Requests
 {
     public class ToggleRelayRequest : RequestBase
     {
@@ -6,24 +9,18 @@
         {
             Resource = "relay/0";
             HttpMethod = RestSharp.Method.Get;
+            UseParameters = false;
+        }
+
+        public ToggleRelayRequest(ToggleType toggleType, string timer)
+        {
+            Resource = "/relay/0";
+            HttpMethod = RestSharp.Method.Get;
             UseParameters = true;
 
             Parameters = new Dictionary<string, string>
             {
-                { "turn", "toggle" },
-                { "timer", "0" }
-            };
-        }
-
-        public ToggleRelayRequest(string turn, string timer, bool useParameters = true)
-        {
-            Resource = "/relay/0";
-            HttpMethod = RestSharp.Method.Get;
-            UseParameters = useParameters;
-
-            Parameters = new Dictionary<string, string>
-            {
-                { "turn", turn },
+                { "turn", toggleType.GetParameterName() },
                 { "timer", timer }
             };
         }
